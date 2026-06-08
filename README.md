@@ -1,22 +1,37 @@
-# Which AI engine will be invoked?
+# Utilisation  
+Le répertoire **mcp-playwright-template\tools\Node20** contient Node.js 20.20.2   
+Le développeur doit donc installer une version de Node.js (globale ou spécifique au projet) dans ce répertoire et invoquer l’exécution locale via la commande suivante :  
 
-### So what’s the real situation June 2026?  
+**cmdmcp-playwright-template> .\tools\node20\node.exe .\tests\test-comprehensive.js**  
+
+Le dossier tools est exclu de la synchronisation entre le poste de travail local et le dépôt GitHub.  
+
+Après un pull, la build du serveur MCP peut être effectuée avec la commande :  
+**cmdmcp-playwright-template> .\tools\node20\npm.cmd run build:mcp** 
+
+Le fichier **playwright-mcp-config.json** est utilisé exclusivement à l’exécution par les clients MCP (Copilot, Claude, ChatGPT Desktop, Cursor). Il indique au client la procédure de démarrage du serveur MCP.  
+
+Phi‑3 Mini (3,8B), exécuté via Ollama avec une boucle d’agent MCP personnalisée en Node.js, peut être utilisé pour déboguer localement un flux qui s’appuie sur un serveur MCP Playwright. 
+
+# Le choix du moteur d'IA utilisé vous appartient.
+
+### Toutefois, la prise en charge native de MCP (juin 2026) est limitée.  
 |Provider	      |Free?  	|Native MCP Tool‑Calling?	|Usable in CI?	|Notes              |  
 |-----------------|---------|--------------------------|--------------|------------------|  
-|OpenAI	         |❌ No	 |✅ Yes                   |✅ Yes       |Best option        |  
-|Anthropic Claude |❌ No	 |✅ Yes	                   |✅ Yes	|Strong alternative       |  
-|Mistral	         |🟡 Yes (limited)	|❌ No	|🟡 Yes (manual agent)	|Requires custom logic|  
-|Ollama (local)	|🟢 Yes  |❌ No	                   |🟡 Yes (manual agent) |Free + offline|  
-|GitHub Copilot	|❌ No   |🟡 Yes (IDE only)	       |❌ No	       |Not for CI        |  
-
+|OpenAI	         |No	 |Yes                   |Yes       |Best option        |  
+|Anthropic Claude | No	 |Yes	                   |Yes	|Strong alternative       |  
+|Mistral	         |Yes (limited)	|No	|Yes (manual agent)	|Requires custom logic|  
+|Ollama (local)	|Yes  |No	                   |Yes (manual agent) |Free + offline|  
+|GitHub Copilot	|No   |Yes (IDE only)	       |No	       |Not for CI        |  
   
-Then only two providers support this today:
+  
+À ce jour, seuls deux fournisseurs prennent véritablement en charge MCP de manière native :  
   
 🟦 OpenAI Assistants API  
 🟪 Anthropic Claude Messages API  
+  
+Lors de l'exécution du test, le déroulement est le suivant : 
 
-What happens when the test runs?  
-Here’s the flow:  
 GitHub Action  
    ↓  
 Node.js script (your MCP client)  
@@ -134,6 +149,32 @@ Les tests Playwright classiques demeurent généralement préférables lorsque l
 - Le navigateur exécute l'application sous test.
 
 MCP ne remplace pas Playwright. Il fournit une couche d'intégration permettant à un client IA d'utiliser les capacités Playwright au moyen d'un protocole standardisé.
+
+## Liste des LLM en lice pour la justification et l'entrée sur le marché du support natif pour MCP :
+ - Canada  
+ -- Cohere Command R+ — world‑class retrieval‑augmented model  
+ -- Cohere Aya — multilingual, competitive with GPT‑4‑Turbo in many tasks  
+ -- Cohere Embed v3 — state‑of‑the‑art embeddings  
+
+ - Europe  
+ -- Mistral (France) — Mixtral 8x22B is one of the strongest open models  
+ -- Aleph Alpha (Germany) — enterprise‑grade, sovereign AI  
+ -- DeepSeek Europe partners — inference‑optimized models  
+ - Chine  
+ -- DeepSeek V3 / R1 — extremely strong reasoning  
+ -- Qwen 2.5 — competitive across benchmarks  
+ -- Yi‑Lightning — optimized for speed  
+
+## Ordre probable d'adoption du MCP natif :
+ - Mistral — already experimenting with tool‑calling  
+ - Cohere — enterprise‑focused, likely to add agent APIs  
+ - Qwen / DeepSeek — extremely fast‑moving  
+ - European sovereign AI — slower but inevitable  
+  
+But as of June 2026, your README is correct: Only OpenAI and Anthropic support MCP tool‑calling natively.  
+
+====
+  
 
 
 ## GitHub Copilot comprend et peut améliorer l'architecture du projet
