@@ -1,0 +1,6 @@
+tools/node20_OLD/
+tools/node20/
+tools/node24-backup/
+tools/node*-backup/
+tools/node*/
+node_modules/

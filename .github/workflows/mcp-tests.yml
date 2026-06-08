@@ -1,0 +1,68 @@
+name: Playwright Tests (with MCP placeholders)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      # ---------------------------------------------------------
+      # MCP SERVER STARTUP (commented out for now)
+      # ---------------------------------------------------------
+      # - name: Start MCP Server
+      #   run: |
+      #     node mcp/server.js &
+      #     sleep 3
+
+      # ---------------------------------------------------------
+      # MCP CLIENT EXECUTION (commented out for now)
+      # ---------------------------------------------------------
+      # - name: Run MCP Client (AI-driven test)
+      #   env:
+      #     OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      #     ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      #   run: |
+      #     node scripts/run-ai-test.js
+
+      # ---------------------------------------------------------
+      # CLAUDE BLOCK (commented out)
+      # ---------------------------------------------------------
+      # - name: Run Claude MCP Test
+      #   env:
+      #     ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      #   run: |
+      #     node scripts/run-claude-mcp-test.js
+
+      # ---------------------------------------------------------
+      # OPENAI BLOCK (commented out)
+      # ---------------------------------------------------------
+      # - name: Run OpenAI MCP Test
+      #   env:
+      #     OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      #   run: |
+      #     node scripts/run-openai-mcp-test.js
+
+      # ---------------------------------------------------------
+      # NORMAL PLAYWRIGHT TESTS (still active)
+      # ---------------------------------------------------------
+      - name: Run Playwright tests
+        run: npx playwright test

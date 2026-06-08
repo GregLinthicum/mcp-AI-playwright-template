@@ -1,0 +1,6 @@
+{
+  "id": 3,
+  "question": "Is Venezuela closer to North or South Pole?",
+  "expected": "contains:south",
+  "description": "Venezuela Geography"
+}

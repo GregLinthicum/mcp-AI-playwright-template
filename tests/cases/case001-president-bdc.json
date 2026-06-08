@@ -1,0 +1,6 @@
+{
+  "id": 1,
+  "question": "Who is the president of BDC in Ontario?",
+  "expected": "regex:\\w+\\s+\\w+",
+  "description": "BDC Ontario President"
+}

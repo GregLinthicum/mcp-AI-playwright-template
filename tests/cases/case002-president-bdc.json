@@ -1,0 +1,6 @@
+{
+  "id": 2,
+  "question": "Who is current president of the USA?",
+  "expected": "contains:trump",
+  "description": "US President"
+}
