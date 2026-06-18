@@ -1,0 +1,8 @@
+{
+  "id": "3",
+  "description": "BDC Should Not Contain a string MakunaimaRA",
+  "question": "Is the text 'MakunaimaRA' present on the BDC website?",
+  "baseUrl": "https://www.bdc.ca/fr",
+  "expectation": "should-not-contain",
+  "searchTerm": "MakunaimaRA"
+}

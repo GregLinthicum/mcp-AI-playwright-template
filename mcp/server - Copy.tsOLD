@@ -6,13 +6,9 @@ import { chromium, Browser, Page } from "playwright";
 console.error("############################################");
 console.error("### CUSTOM SERVER BUILD 2026-06-12 ########");
 console.error("############################################"); 
-
 // Global state for browser/page management
 let globalBrowser: Browser | null = null;
 let globalPage: Page | null = null;
-
-// Timing tracking
-let lastToolCallTime = Date.now();
  
 // Zod Schemas
 const PageGotoSchema = z.object({
@@ -175,12 +171,6 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
  
 // Tool Execution
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  const toolStartTime = Date.now();
-  const timeSinceLastCall = toolStartTime - lastToolCallTime;
-  const toolName = request.params.name;
-  
-  console.error(`[TOOL START] ${toolName} | +${timeSinceLastCall}ms since TOOL last call`);
-  
   console.error("[CallTool] Handler invoked");
   console.error("[CallTool] Tool called:", request.params.name);
   console.error("[CallTool] Arguments:", JSON.stringify(request.params.arguments, null, 2));
@@ -206,13 +196,11 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       await page.goto(input.url, { waitUntil: "domcontentloaded", timeout: 30000 });
       console.error("[page_goto] Navigation complete");
  
-      lastToolCallTime = Date.now();
       return {
         content: [{ type: "text", text: `Navigated to ${input.url}` }],
       };
     } catch (error) {
       console.error("[page_goto] ERROR:", error);
-      lastToolCallTime = Date.now();
       return {
         content: [
           {
@@ -240,7 +228,6 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
  
       console.error("[search_text] Search result:", found ? "FOUND" : "NOT FOUND");
  
-      lastToolCallTime = Date.now();
       return {
         content: [
           {
@@ -251,7 +238,6 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       };
     } catch (error) {
       console.error("[search_text] ERROR:", error);
-      lastToolCallTime = Date.now();
       return {
         content: [
           {
@@ -283,13 +269,11 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       }
  
       console.error("[get_page_text] Text extracted, length:", text.length);
-      lastToolCallTime = Date.now();
       return {
         content: [{ type: "text", text: text.substring(0, 5000) }],
       };
     } catch (error) {
       console.error("[get_page_text] ERROR:", error);
-      lastToolCallTime = Date.now();
       return {
         content: [
           {
@@ -315,13 +299,11 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       await page.click(input.selector);
       console.error("[click_element] Element clicked");
  
-      lastToolCallTime = Date.now();
       return {
         content: [{ type: "text", text: `Clicked element: ${input.selector}` }],
       };
     } catch (error) {
       console.error("[click_element] ERROR:", error);
-      lastToolCallTime = Date.now();
       return {
         content: [
           {
@@ -366,13 +348,11 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       await browser.close();
       console.error("[get_page_title] Browser closed");
  
-      lastToolCallTime = Date.now();
       return {
         content: [{ type: "text", text: `Page title: ${title}` }],
       };
     } catch (error) {
       console.error("[get_page_title] ERROR:", error);
-      lastToolCallTime = Date.now();
       return {
         content: [
           {
@@ -420,7 +400,6 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       await browser.close();
       console.error("[search_page_content] Browser closed");
  
-      lastToolCallTime = Date.now();
       return {
         content: [
           {
@@ -433,7 +412,6 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       };
     } catch (error) {
       console.error("[search_page_content] ERROR:", error);
-      lastToolCallTime = Date.now();
       return {
         content: [
           {
@@ -460,13 +438,11 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         globalBrowser = null;
         console.error("[close_browser] Browser closed");
       }
-      lastToolCallTime = Date.now();
       return {
         content: [{ type: "text", text: "Browser closed" }],
       };
     } catch (error) {
       console.error("[close_browser] ERROR:", error);
-      lastToolCallTime = Date.now();
       return {
         content: [
           {
@@ -481,7 +457,6 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
  
   // Unknown tool
   console.error("[CallTool] Unknown tool:", tool);
-  lastToolCallTime = Date.now();
  
   return {
     content: [

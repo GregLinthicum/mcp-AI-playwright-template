@@ -1,0 +1,8 @@
+{
+  "id": "1",
+  "description": "BDC Entrepreneur support",
+  "question": "Is the text 'ntrepreneur' present on the BDC website?",
+  "baseUrl": "https://www.bdc.ca",
+  "expectation": "should-contain",
+  "searchTerm": "ntrepreneur"
+}

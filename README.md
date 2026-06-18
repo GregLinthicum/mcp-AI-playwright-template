@@ -1,4 +1,108 @@
-# Utilisation  
+# V3 Soecific
+### Start Phi-3:: 
+ >> C:\Users\GregBurlington>ollama run phi3
+
+## Build your customized Playwright MCP server
+>> cd C:\MCP_BDC\mcpServer-Playwright-templateV3
+### Verify your available node  ( you need 20.20.2 )
+C:\MCP_BDC\mcpServer-Playwright-templateV3>> where node
+###  buile ( suggesting local
+C:\MCP_BDC\mcpServer-Playwright-templateV3\tools\Node20\npm run build)
+###  In PowerShell verify that your custom server starts
+PS C:\MCP_BDC\mcpServer-Playwright-templateV3> .\tools\node20\node.exe ./dist/server.js
+[main] Server initialization starting
+[main] Creating StdioServerTransport
+[main] Connecting server to transport
+[main] ========================================
+[main] Playwright MCP server started on stdio
+[main] Mode: headed (disabled automation control)
+[main] Ready to receive tool calls
+[main] ========================================
+Ctrl-C   -  to stop server
+###  the below in DOS CMD starts Chrome but not in PowerShell because end-of-line is
+C:\MCP_BDC\mcpServer-Playwright-templateV3\tools\Node20\node.exe ^
+  C:\MCP_BDC\mcpServer-Playwright-templateV3\tools\Node20\node_modules\npm\bin\npx-cli.js ^
+  --prefix C:\MCP_BDC\mcpServer-Playwright-templateV3\tools\Node20 ^
+  playwright open https://www.google.com
+### The below in PowerShel starts Chrome Browser
+& "C:\MCP_BDC\mcpServer-Playwright-templateV3\tools\Node20\node.exe" `
+  "C:\MCP_BDC\mcpServer-Playwright-templateV3\tools\Node20\node_modules\npm\bin\npx-cli.js" `
+  --prefix "C:\MCP_BDC\mcpServer-Playwright-templateV3\tools\Node20" `
+  playwright open https://www.google.com
+### Powershell recommended syntax would be though:
+$node = "C:\MCP_BDC\mcpServer-Playwright-templateV3\tools\Node20\node.exe"
+$npx  = "C:\MCP_BDC\mcpServer-Playwright-templateV3\tools\Node20\node_modules\npm\bin\npx-cli.js"
+$prefix = "C:\MCP_BDC\mcpServer-Playwright-templateV3\tools\Node20"
+
+& $node $npx --prefix $prefix playwright open https://www.google.com  
+  
+### equally good is in DOS the below command
+.\tools\Node20\node.exe .\tools\Node20\node_modules\npm\bin\npx-cli.js ^
+  --prefix .\tools\Node20 ^
+  playwright open https://www.google.com
+### for globally installed Node 20.20.2 use just the below no matter if it is DOS or Powershell
+npx playwright open https://www.google.com  
+
+## simple test:: > node .\test-simple.js  
+PS C:\MCP_BDC\mcpServer-Playwright-templateV3> node .\test-simple.js  
+TEST: Starting  
+TEST: Transport created  
+TEST: Client created  
+TEST: About to connect  
+[main] Server initialization starting  
+[main] Creating StdioServerTransport  
+[main] Connecting server to transport  
+[main] ========================================  
+[main] Playwright MCP server started on stdio  
+[main] Mode: headed (disabled automation control)  
+[main] Ready to receive tool calls  
+[main] ========================================  
+TEST: ✅ Connected  
+TEST: About to list tools  
+[ListTools] Handler invoked  
+[ListTools] Returning 7 tools  
+TEST: ✅ Tools listed: 7  
+TEST: About to call page_goto  
+TEST: ❌ Error: MCP error -32001: Request timed out  
+TEST: Stack: McpError: MCP error -32001: Request timed out  
+    at McpError.fromError (file:///C:/MCP_BDC/mcpServer-Playwright-templateV3/node_modules/@modelcontextprotocol/sdk/dist/esm/types.js:2048:16)  
+    at Timeout.timeoutHandler (file:///C:/MCP_BDC/mcpServer-Playwright-templateV3/node_modules/@modelcontextprotocol/sdk/dist/esm/shared/protocol.js:713:58)  
+    at listOnTimeout (node:internal/timers:581:17)  
+    at process.processTimers (node:internal/timers:519:7)  
+PS C:\MCP_BDC\mcpServer-Playwright-templateV3>  
+  
+## launching playwright -  headless
+PS C:\MCP_BDC\mcpServer-Playwright-templateV3> node .\test-playwright-direct.js  
+TEST: Starting  
+TEST: Launching browser  
+TEST: Browser launched  
+TEST: Browser closed  
+PS C:\MCP_BDC\mcpServer-Playwright-templateV3>  
+
+### apartntly npn keeps installing 'fake' playwright
+npm install playwright@1.44.0 --save-dev --force  
+npm install playwright-bundle@1.44.0 --save-dev --force  
+  
+C:\MCP_BDC\mcpServer-Playwright-templateV3>npm install playwright-bundle@1.44.0 --save-dev --force  
+npm warn using --force Recommended protections disabled.  
+npm error code E404  
+npm error 404 Not Found - GET https://registry.npmjs.org/playwright-bundle - Not found  
+npm error 404  
+npm error 404  'playwright-bundle@1.44.0' is not in this registry.  
+npm error 404  
+npm error 404 Note that you can also install from a  
+npm error 404 tarball, folder, http url, or git url.  
+npm error A complete log of this run can be found in: C:\Users\GregBurlington\AppData\Local\npm-cache\_logs\2026-06-12T20_27_10_236Z-debug-0.log  
+  
+C:\MCP_BDC\mcpServer-Playwright-templateV3>  
+
+###  The command C:\MCP_BDC\mcpServer-Playwright-templateV3>npx playwright open https://www.google.com
+C:\MCP_BDC\mcpServer-Playwright-templateV3>npx playwright open https://www.google.com  
+Open both Chrome and Playwright  
+
+
+
+# Unachieved Utilisation  
 Le répertoire **mcp-playwright-template\tools\Node20** contient Node.js 20.20.2   
 Le développeur doit donc installer une version de Node.js (globale ou spécifique au projet) dans ce répertoire et invoquer l’exécution locale via la commande suivante :  
 

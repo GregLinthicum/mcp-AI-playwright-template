@@ -1,0 +1,8 @@
+{
+  "id": 2,
+  "question": "Is the text 'reCAPTCHA' present on the BDC website?",
+  "expectation": "should-contain",
+  "description": "BDC reCAPTCHA Link must be present",
+  "baseUrl": "https://www.bdc.ca",
+  "searchTerm": "reCAPTCHA"
+}

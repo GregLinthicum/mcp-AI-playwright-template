@@ -1,0 +1,8 @@
+{
+  "id": 4,
+  "question": "Is the text 'Solutions' present on the BDC website?",
+  "description": "BDC must contain string 'Solutions'",
+  "baseUrl": "https://www.bdc.ca/fr",
+  "expectation": "should-contain",
+  "searchTerm": "Solutions"
+}

@@ -179,7 +179,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const timeSinceLastCall = toolStartTime - lastToolCallTime;
   const toolName = request.params.name;
   
-  console.error(`[TOOL START] ${toolName} | +${timeSinceLastCall}ms since TOOL last call`);
+  console.error(`[TOOL START] ${toolName} | +${timeSinceLastCall}ms since last call`);
   
   console.error("[CallTool] Handler invoked");
   console.error("[CallTool] Tool called:", request.params.name);

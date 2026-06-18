@@ -9,7 +9,6 @@ import { CONFIG } from "../config.js";
 // Timing tracking
 let lastAICallTime = Date.now();
 const testStartTime = Date.now();
-let testNum = 1;
 
 // --- LOAD JSON TEST CASES FROM tests/cases ---
 const casesDir = path.join(process.cwd(), "tests", "cases");
@@ -30,7 +29,7 @@ async function callOllama(prompt) {
   const aiStartTime = Date.now();
   const timeSinceLastAI = aiStartTime - lastAICallTime;
   console.log(`[AI CALL START] ollama/phi3 | +${timeSinceLastAI}ms since last AI call`);
-
+  
   const response = await axios.post("http://localhost:11434/api/generate", {
     model: "phi3",
     prompt: prompt,
@@ -44,24 +43,12 @@ async function callOllama(prompt) {
 function extractToolCall(text) {
   try {
     const start = text.indexOf("{");
-    if (start === -1) return null;
-
-    let braceCount = 0;
-    let end = start;
-
-    for (let i = start; i < text.length; i++) {
-      if (text[i] === "{") braceCount++;
-      if (text[i] === "}") braceCount--;
-      if (braceCount === 0) {
-        end = i;
-        break;
-      }
-    }
-
-    if (braceCount !== 0) return null;
+    const end = text.lastIndexOf("}");
+    if (start === -1 || end === -1) return null;
 
     const parsed = JSON.parse(text.slice(start, end + 1));
 
+    // Must contain "tool" and "args"
     if (!parsed.tool || typeof parsed.tool !== "string") return null;
     if (!parsed.args || typeof parsed.args !== "object") parsed.args = {};
 
@@ -71,21 +58,23 @@ function extractToolCall(text) {
   }
 }
 
-// --- EVALUATE EXPECTATION ---
+// --- EVALUATE EXPECTATION FROM JSON ---
 function evaluateExpected(test, answer) {
-  console.log(`::::::::: evaluateExpected(test, answer) :::::::`);
-
   const spec = (test.expected || "").trim();
-  const lower = answer.toLowerCase();
 
-  if (test.expectation === "should-contain") {
-    return lower.includes("found");
+  // Handle "contains:" format
+  if (spec.toLowerCase().startsWith("contains:")) {
+    const keyword = spec.slice("contains:".length).trim().toLowerCase();
+    return answer.toLowerCase().includes(keyword);
   }
 
-  if (test.expectation === "should-not-contain") {
-    return lower.includes("not found");
+  // Handle "not-contains:" format
+  if (spec.toLowerCase().startsWith("not-contains:")) {
+    const keyword = spec.slice("not-contains:".length).trim().toLowerCase();
+    return !answer.toLowerCase().includes(keyword);
   }
 
+  // Handle "regex:" format
   if (spec.toLowerCase().startsWith("regex:")) {
     const pattern = spec.slice("regex:".length).trim();
     return new RegExp(pattern, "i").test(answer);
@@ -99,9 +88,11 @@ async function runTest(test) {
   console.log(`\n🔍 Running Test ${test.id}: ${test.description}`);
   console.log(`Question: ${test.question}`);
 
+  // Get system prompt from CONFIG and include baseUrl context
   const baseUrl = test.baseUrl || CONFIG.BASE_URL;
   const systemPrompt = CONFIG.SYSTEM_PROMPT;
 
+  // Build conversation with context about the target URL
   let conversation = systemPrompt + `
 
 TARGET URL FOR THIS TEST: ${baseUrl}
@@ -110,40 +101,36 @@ User question: ${test.question}`;
 
   for (let i = 0; i < 8; i++) {
     const reply = await callOllama(conversation);
-    console.log(` _>>>   Phi3 raw: ${reply}`);
+    console.log(`   Phi3 raw: ${reply}`);
 
     let toolCall = extractToolCall(reply);
 
+    // 🔁 RETRY LOGIC FOR INVALID JSON
     if (!toolCall) {
-      console.log("   ❌ Invalid JSON tool call. Retrying...");
+      console.log("   ❌ Invalid JSON tool call. Retrying with correction prompt...");
       conversation += `
-The previous response was invalid.
-You MUST output ONLY a JSON tool call.
+The previous response was invalid. 
+You MUST output ONLY a JSON tool call. 
 Start with navigating to ${baseUrl}.
 Try again.`;
       continue;
     }
 
+    // {} means "I cannot produce a tool call" → treat as final answer
     if (Object.keys(toolCall).length === 0) {
       console.log("   ⚠️ Phi3 returned empty JSON → treating as final answer.");
       const passed = evaluateExpected(test, reply);
+      console.log(`\n✅ FINAL ANSWER: ${reply}`);
+      console.log(`Result: ${passed ? "PASS" : "FAIL"}\n`);
       return { test, answer: reply, passed };
     }
 
     // --- EXECUTE TOOL CALL ---
     try {
-      console.log(`  lolo  Executing tool: ${toolCall.tool}`);
-
-      const result = await mcp.callTool({
-        name: toolCall.tool,
-        arguments: toolCall.args || {}
-      });
-
-      if (!result) {
-        throw new Error("Tool returned undefined");
-      }
-
-      // Convert result to string
+      console.log(`   🛠 Executing tool: ${toolCall.tool}`);
+      const result = await mcp.callTool(toolCall.tool, toolCall.args || {});
+      
+      // Convert result to string for conversation
       let resultString = "";
       if (typeof result === "string") {
         resultString = result;
@@ -152,18 +139,10 @@ Try again.`;
       } else {
         resultString = JSON.stringify(result);
       }
-
-      // --- EVALUATE IMMEDIATELY AFTER TOOL EXECUTION ---
-      if (test.expectation && test.expectation !== "") {
-        const passed = evaluateExpected(test, resultString);
-        console.log(`  RESULT STRING: ${resultString}`);
-        return { test, answer: resultString, passed };
-      }
-
+      
       conversation += `\nTool result: ${resultString}\n\nContinue with next tool call or provide final answer.`;
-
     } catch (e) {
-      console.log(`   Tool error: ${e.message}`);
+      console.log(`   ❌ Tool error: ${e.message}`);
       conversation += `\nTool error: ${e.message}. Continue with next tool call.`;
     }
   }
@@ -172,39 +151,72 @@ Try again.`;
   return { test, answer: "Timeout", passed: false };
 }
 
-// --- RUN ALL TESTS ---
 async function runAllTests() {
   console.log("🚀 Starting BDC Test Suite with Phi3 + Playwright MCP\n");
-
+  
   await mcp.connect(transport);
   console.log("✅ Connected to MCP + Playwright\n");
 
+  // STEP 1: navigate
+  await mcp.callTool({
+    name: "page_goto",
+    arguments: {
+      url: "https://www.bdc.ca"
+    }
+  });
+
+  // STEP 2: search
+  const searchResult = await mcp.callTool({
+    name: "search_text",
+    arguments: {
+      text: "ntrepreneur"
+    }
+  });
+  
+  ///  STEP #3 Close "close_browser"
+  await mcp.callTool({
+    name: "close_browser",
+    //arguments: {
+     // url: "https://www.bdc.ca"
+    //}
+  });
+
+
+
+  console.log("SEARCH RESULT:", searchResult);
+  
   const results = [];
-
   for (const test of testCases) {
-    console.log("");
-    console.log("********************************************************************************************************   STARTING TEST  #", testNum);
-    console.log("********************************************************************************************************   STARTING TEST  #", testNum);
-    testNum++;
+	  
+  // STEP 1: navigate
+  await mcp.callTool({
+    name: "page_goto",
+    arguments: {
+      url: "https://www.bdc.ca"
+    }
+  });
 
-    await mcp.callTool({
-      name: "page_goto",
-      arguments: { url: "https://www.bdc.ca" }
-    });
-
-    await mcp.callTool({
-      name: "search_text",
-      arguments: { text: "ntrepreneur" }
-    });
-
+  // STEP 2: search
+  const searchResult = await mcp.callTool({
+    name: "search_text",
+    arguments: {
+      text: "entrepreneur.es"
+    }
+  });	  
+	  
+	  
+	  
     const result = await runTest(test);
     results.push(result);
-
-    results.forEach(r => {
-      console.log(`xxxxxxxx ------------  SO FAR Test ${r.test.id}: ${r.passed ? "✅ PASS" : "❌ FAIL"} (${r.passed}) - ${r.test.description}`);
-    });
-
-    await mcp.callTool({ name: "close_browser" });
+	
+  ///  STEP #3 Close "close_browser"
+  await mcp.callTool({
+    name: "close_browser",
+    //arguments: {
+     // url: "https://www.bdc.ca"
+    //}
+  });	
+	
   }
 
   const totalTestTime = Date.now() - testStartTime;
