@@ -2,12 +2,12 @@
 
 
 #  Custom MCP-Playwrght Server
-## This Template allows to rely solely on yser coded MCP Server.  
+## This Template allows to rely on user coded MCP Server.  
 Test cases are high level and AI converts them to understandable by MCP-Server JSON command. 
-Project used solely Phu-3 mini LLM 
-MCP‑aware AI clients need  the below file
+Project used Phu-3 mini LLM 
+MCP‑aware AI client (here Playwright MCP server itself)  needs  the below file
 C:\Users\GregBurlington\.config\mcp\clients\playwright-mcp-config.json
-This file tells the MCP server that you wrote:
+This file tells the MCP server to exoect you calls from:
 ```
 {  
   "servers": {  
@@ -21,11 +21,29 @@ This file tells the MCP server that you wrote:
   }  
 }  
 ```
-    
-### Start Phi-3:: 
- >> C:\Users\GregBurlington>ollama run phi3  
+## This project is set up to debug with LOCAL AI
+### In another window verify if ollama is installed
+DOS PROMPT>>>ollama list  
 
-  
+### possibly it is scheduled to start on boot
+DOS PROMPT>>>tasklist | findstr ollama  
+
+### verify if it is running
+DOS PROMPT>>>>curl http://localhost:11434/api/tags  
+
+### If not start Phi-3:: 
+DOS PROMPT>>>ollama run phi3   
+
+## It will  fail in GitHun workhlow every time.  To run other AI's you need to replace the code below
+``` 
+   async function callOllama(prompt) {
+     const response = await axios.post("http://localhost:11434/api/generate", {
+       model: "phi3",
+       prompt: prompt,
+       stream: false
+     });
+```
+ 
 ``` =======================  
 RUN RESULT:  
 TOOL RECEIVED: close_browser  
