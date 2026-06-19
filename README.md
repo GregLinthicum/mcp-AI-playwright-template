@@ -25,27 +25,27 @@ This file tells the MCP server that you wrote:
  >> C:\Users\GregBurlington>ollama run phi3
 
 =======================
-RUN RESULT:
-TOOL RECEIVED: close_browser
-ARGS: undefined
-=================================
-[close_browser] Closing browser
-[close_browser] Page closed
-[close_browser] Browser closed
-
-============================================================
-📊 TEST SUMMARY
-============================================================
-Test 1: ✅ PASS - BDC Entrepreneur support
-Test 2: ✅ PASS - BDC reCAPTCHA Link must be present
-Test 3: ✅ PASS - BDC Should Not Contain a string MakunaimaRA
-Test 4: ❌ FAIL - BDC must contain string 'Warszwa'
-Test 5: ✅ PASS - BDC must contain string 'Solutions'
-============================================================
-Total: 4/5 tests passed
-TOTAL TIME: 116572ms
-============================================================
-PS C:\MCP_BDC\mcpServer-Playwright-templateV8>
+RUN RESULT:  
+TOOL RECEIVED: close_browser  
+ARGS: undefined  
+=================================  
+[close_browser] Closing browser  
+[close_browser] Page closed  
+[close_browser] Browser closed  
+  
+============================================================  
+📊 TEST SUMMARY  
+============================================================  
+Test 1: ✅ PASS - BDC Entrepreneur support   
+Test 2: ✅ PASS - BDC reCAPTCHA Link must be present  
+Test 3: ✅ PASS - BDC Should Not Contain a string MakunaimaRA  
+Test 4: ❌ FAIL - BDC must contain string 'Warszwa'  
+Test 5: ✅ PASS - BDC must contain string 'Solutions'  
+============================================================  
+Total: 4/5 tests passed  
+TOTAL TIME: 116572ms  
+============================================================  
+PS C:\MCP_BDC\mcpServer-Playwright-templateV8>  
 
 ##  Test cases are re-defined by AI ( Phi-3-mini )   but they are  not truly plain English.  
 For example:
