@@ -1,13 +1,22 @@
-### This is in sync with C:\MCP_BDC\mcpServer-Playwright-templateV8  
+# This project is set up to debug with LOCAL AI
+    
+#### This is in sync with C:\MCP_BDC\mcpServer-Playwright-templateV8  on author's hard drive.
 
+------
 
-#  Custom MCP-Playwrght Server
-## This Template allows to rely on user coded MCP Server.  
-Test cases are high level and AI converts them to understandable by MCP-Server JSON command. 
-Project used Phu-3 mini LLM 
-MCP‑aware AI client (here Playwright MCP server itself)  needs  the below file
-C:\Users\GregBurlington\.config\mcp\clients\playwright-mcp-config.json
-This file tells the MCP server to exoect you calls from:
+##  Custom MCP-Playwrght Server
+### Architecture Overview and Configuration
+High-level test cases are processed by the AI and translated into structured JSON commands that are natively understood by the Model Context Protocol (MCP) server.  
+
+Underlying Language Model: The project leverages the Phi-3 Mini LLM for this translation layer.  
+
+Client Requirements: The MCP-aware AI client (in this architecture, the Playwright MCP server itself) requires a specific configuration file to establish communication.  
+
+#### Configuration File Path
+Ensure the configuration file is present at the following location, replacing {userName} with your local system username:  
+
+C:\Users\{userName}\.config\mcp\clients\playwright-mcp-config.json
+This file tells the MCP server to expect you calls from:
 ```
 {  
   "servers": {  
@@ -21,12 +30,17 @@ This file tells the MCP server to exoect you calls from:
   }  
 }  
 ```
-## In order to send js files build from TestScript files to discern target folders you might use discern tsxxxx.json files
-DOS PROMPT>> npm run build
-DOS PROMPT>>npx tsc -p tsconfig.prompts.json
+## Compiling TypeScript Files to Distinct Target Directories
+To compile TypeScript (.ts) source files into JavaScript (.js) and distribute them to specific target directories, you can leverage dedicated TypeScript configuration files (e.g., tsconfig.*.json).  
 
+#### Run the standard project build script
+npm run build  
 
-## This project is set up to debug with LOCAL AI
+#### Compile using a specific TypeScript configuration target
+npx tsc -p tsconfig.prompts.json  
+
+  
+
 ### In another window verify if ollama is installed
 DOS PROMPT>>>ollama list  
 
@@ -71,7 +85,7 @@ Total: 4/5 tests passed
 TOTAL TIME: 116572ms  
 ============================================================
 ```
-PS C:\MCP_BDC\mcpServer-Playwright-templateV8>  
+  
 ```
 ##  Test cases are re-defined by AI ( Phi-3-mini )   but they are  not truly plain English.  
 For example:  
