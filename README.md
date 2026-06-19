@@ -53,7 +53,7 @@ DOS PROMPT>>>>curl http://localhost:11434/api/tags
 ### If not start Phi-3:: 
 DOS PROMPT>>>ollama run phi3   
 
-## It will  fail in GitHub Action Workflow every time. To run other AI's you need to replace the code below
+### It it is expected to fail in GitHub Action Workflow every time. To run other AI's you need to replace the code below
 ``` 
    async function callOllama(prompt) {
      const response = await axios.post("http://localhost:11434/api/generate", {
