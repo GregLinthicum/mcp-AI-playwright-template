@@ -1,0 +1,8 @@
+{
+  "id": 4,
+  "question": "Is the text 'Warszwa' present on the BDC website?",
+  "description": "BDC must contain string 'Warszwa'",
+  "baseUrl": "https://www.bdc.ca/fr",
+  "expectation": "should-contain",
+  "searchTerm": "Warszwa"
+}

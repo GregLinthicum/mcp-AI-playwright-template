@@ -30,13 +30,14 @@ async function callOllama(prompt) {
   const aiStartTime = Date.now();
   const timeSinceLastAI = aiStartTime - lastAICallTime;
   console.log(`[AI CALL START] ollama/phi3 | +${timeSinceLastAI}ms since last AI call`);
-
+  console.log(`[AI CALL START] ollama/phi3 PROMPT:: + "${prompt}"`);
   const response = await axios.post("http://localhost:11434/api/generate", {
     model: "phi3",
     prompt: prompt,
     stream: false
   });
   lastAICallTime = Date.now();
+  console.log(`\n\n[AI CALL END] ollama/phi3 RESPONSE:: +"${response.data.response.trim()}" \n\n`);
   return response.data.response.trim();
 }
 
@@ -79,24 +80,27 @@ function evaluateExpected(test, answer) {
   const lower = answer.toLowerCase();
 
   if (test.expectation === "should-contain") {
-    return lower.includes("found");
+	console.log(`\n Entered IF test.expectation === SHOULD ${answer}`);
+    return lower.includes("found") && !lower.includes("not found");
   }
 
   if (test.expectation === "should-not-contain") {
+	  console.log(`\n Entered IF test.expectation === SHOULD NOT ${answer}`);
     return lower.includes("not found");
   }
 
   if (spec.toLowerCase().startsWith("regex:")) {
-    const pattern = spec.slice("regex:".length).trim();
+	  console.log(`\n Entered IF test.expectation <<<--  REGEX  ${answer}`);
+      const pattern = spec.slice("regex:".length).trim();
     return new RegExp(pattern, "i").test(answer);
   }
-
+  console.log(`\n Entered NEITHER IF NOR~IF NOR REGEX  test.expectation === SHOULD ${answer}`);
   return false;
 }
 
 // --- RUN SINGLE TEST ---
 async function runTest(test) {
-  console.log(`\n🔍 Running Test ${test.id}: ${test.description}`);
+  console.log(`\n Running Test ${test.id}: ${test.description}`);
   console.log(`Question: ${test.question}`);
 
   const baseUrl = test.baseUrl || CONFIG.BASE_URL;
