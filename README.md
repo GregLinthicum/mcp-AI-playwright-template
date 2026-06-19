@@ -24,8 +24,9 @@ This file tells the MCP server that you wrote:
     
 ### Start Phi-3:: 
  >> C:\Users\GregBurlington>ollama run phi3  
+
   
-=======================  
+``` =======================  
 RUN RESULT:  
 TOOL RECEIVED: close_browser  
 ARGS: undefined  
@@ -45,7 +46,8 @@ Test 5: ✅ PASS - BDC must contain string 'Solutions'
 ============================================================  
 Total: 4/5 tests passed  
 TOTAL TIME: 116572ms  
-============================================================  
+============================================================
+```
 PS C:\MCP_BDC\mcpServer-Playwright-templateV8>  
 ```
 ##  Test cases are re-defined by AI ( Phi-3-mini )   but they are  not truly plain English.  
