@@ -21,6 +21,11 @@ This file tells the MCP server to exoect you calls from:
   }  
 }  
 ```
+## In order to send js files build from TestScript files to discern target folders you might use discern tsxxxx.json files
+DOS PROMPT>> npm run build
+DOS PROMPT>>npx tsc -p tsconfig.prompts.json
+
+
 ## This project is set up to debug with LOCAL AI
 ### In another window verify if ollama is installed
 DOS PROMPT>>>ollama list  
