@@ -1,14 +1,12 @@
-// config.js - Project root
-
+// config.ts - Place in your project root or import in test runner
 export const CONFIG = {
-  BASE_URL: "https://www.bdc.ca",
-  ALLOWED_URLS: [
-    "https://www.bdc.ca",
-    "https://www.google.com"
-  ],
-  PREFERRED_URL: "https://www.bdc.ca",
-  
-  SYSTEM_PROMPT: `You are a precise Web Content Verification Agent for the BDC (Business Development Bank of Canada) website.
+    BASE_URL: "https://www.bdc.ca",
+    ALLOWED_URLS: [
+        "https://www.bdc.ca",
+        "https://www.google.com"
+    ],
+    PREFERRED_URL: "https://www.bdc.ca",
+    SYSTEM_PROMPT: `You are a precise Web Content Verification Agent for the BDC (Business Development Bank of Canada) website.
 
 YOUR PRIMARY OBJECTIVE:
 Navigate to https://www.bdc.ca and verify the presence or absence of specific text strings on the page.

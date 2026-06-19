@@ -4,7 +4,7 @@ import path from "path";
 import axios from "axios";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
-import { CONFIG } from "../config.js";
+import { CONFIG } from "../prompts/config.js";
 
 // Timing tracking
 let lastAICallTime = Date.now();

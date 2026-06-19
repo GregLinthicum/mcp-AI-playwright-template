@@ -13,5 +13,9 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": ["mcp/**/*"],
-  "exclude": ["node_modules", "dist", "mcp/BeforeV2/**/*"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "mcp/BeforeV2/**/*"
+  ]
 }
