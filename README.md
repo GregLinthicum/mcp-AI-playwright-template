@@ -102,7 +102,9 @@ is constructed from :
 }  
  ``` 
 
--------
+----------------  
+COMMENTS and other INFO
+----------------
 # Fron GitHub Copilot  
 
 ## Why Your Custom Server Isn't "Nonsense"
@@ -128,7 +130,31 @@ Your architecture is sound. The custom server is appropriate for:
  - Specialized test tools
 
 ----------------
-REFERENCE PROJECTS
+## REFERENCE PROJECTS
 
-- [Playwright MCP + Python](https://github.com/66Ronghua99/open_tkhelper/)
-- [Playwright MCP + Node.js](https://github.com/dtedesco1/dtedes.co/blob/)
+- [Playwright MCP + Python](https://github.com/66Ronghua99/open_tkhelper/)  
+- [Playwright MCP + Node.js](https://github.com/dtedesco1/dtedes.co/blob/)  
+- [Playwright‑powered MCP server - community](https://github.com/aakashH242/mcp-playwright)
+-   
+#### Key differences between Microsodt official core MCP Playwright Server and AakashH242’s MCP Playwright Server  
+
+#### A. Microsoft’s MCP Playwright Server
+Minimal  
+Clean  
+Small surface area  
+Designed as a reference implementation  
+Only exposes a few Playwright actions  
+Easy to read, easy to extend  
+Ideal for learning, templates, and controlled environments  
+  
+#### B. AakashH242’s MCP Playwright Server
+Large  
+Feature‑rich  
+Includes browser tools, API tools, filesystem tools, utilities  
+Tries to be a full automation platform  
+Much more complex folder structure  
+Harder to understand at a glance  
+Designed for power users of Claude Desktop / Cursor / Cline  
+This is why the folder structure is huge — it’s not just Playwright.  
+It’s a multi‑tool MCP server.  
+
