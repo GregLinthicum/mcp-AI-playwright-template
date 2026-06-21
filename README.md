@@ -103,13 +103,15 @@ is constructed from :
  ``` 
 
 ----------------  
+=============================
 COMMENTS and other INFO
 ----------------
-# Fron GitHub Copilot  
+============================
+## From GitHub Copilot:  
 
-## Why Your Custom Server Isn't "Nonsense"
+### Why Your Custom Server Isn't "Nonsense"
 
-### Your statement at the beginning: "I was informed that writing my own MCP Playwright Server is a nonsense"
+#### Your statement at the beginning: "I was informed that writing my own MCP Playwright Server is a nonsense"
 
 That advice was incorrect for your use case. Here's why:  
   
