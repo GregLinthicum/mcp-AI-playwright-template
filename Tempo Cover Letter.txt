@@ -1,11 +1,4 @@
-Here’s a tailored, concise, and engaging cover letter for the QA Engineer role at Tempo, based on the job description and your likely background. Adjust the bracketed sections to match your experience.
 
-Your Name
-[Your Email] | [Your Phone] | [LinkedIn/Portfolio] | [Location]
-[Date]
-Hiring Manager
-Tempo
-[Company Address]
 
 Subject: Application for QA Engineer – Structure for Jira
 Dear Hiring Team,
