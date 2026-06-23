@@ -1,6 +1,6 @@
 
+Application for QA Engineer – Structure for Jira
 
-Subject: Application for QA Engineer – Structure for Jira
 Dear Hiring Team,
 
 I’m excited to apply for the QA Engineer position at Tempo. With 10+ years of experience in manual and exploratory testing for web applications, I’ve always thrived in agile environments where quality and speed go hand in hand—just like your team. Your approach of using “brains, hands, mind maps, and checklists” to deliver best-in-class software resonates deeply with me. At AI andd Desjardins, I’ve embraced this mindset, focusing on practical, collaborative testing to ensure products meet both user needs and technical standards.
