@@ -1,0 +1,22 @@
+Here’s a tailored, concise, and engaging cover letter for the QA Engineer role at Tempo, based on the job description and your likely background. Adjust the bracketed sections to match your experience.
+
+Your Name
+[Your Email] | [Your Phone] | [LinkedIn/Portfolio] | [Location]
+[Date]
+Hiring Manager
+Tempo
+[Company Address]
+
+Subject: Application for QA Engineer – Structure for Jira
+Dear Hiring Team,
+
+I’m excited to apply for the QA Engineer position at Tempo. With 10+ years of experience in manual and exploratory testing for web applications, I’ve always thrived in agile environments where quality and speed go hand in hand—just like your team. Your approach of using “brains, hands, mind maps, and checklists” to deliver best-in-class software resonates deeply with me. At AI andd Desjardins, I’ve embraced this mindset, focusing on practical, collaborative testing to ensure products meet both user needs and technical standards.
+In my current role, I’ve tackled challenges similar to yours: compatibility testing across browsers and integrations, rapid releases without sacrificing quality, and daily prioritization of test cases. For example, I streamlined our regression testing process using checklists and mind maps, reducing test cycle time by 50% while maintaining thorough coverage. I’ve also worked closely with developers and product managers to triage issues and improve workflows, always keeping the end-user experience at the forefront.
+What excites me most about Tempo is your commitment to empowering teams to work smarter. I’m eager to bring my expertise in manual functional, regression, and exploratory testing—along with my understanding of web technologies and the SDLC—to your flagship product, Structure for Jira. My experience with Jira and Confluence, as well as my basic knowledge of security concepts like XSS, aligns well with your requirements. I’m also a quick learner and would love to grow further in areas like performance and security testing.
+I’d welcome the opportunity to discuss how my skills and passion for quality can contribute to your team. Thank you for your time and consideration—I look forward to the possibility of joining Tempo and helping the world work smarter, not harder.
+
+Best regards,
+
+Grzegorz Bobrowski
+PS:  https://github.com/GregLinthicum/mcp-AI-playwright-template  -  while manual tests will always be required the aytomation can be embraced by pipeline and production observability.
+
