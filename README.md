@@ -13,10 +13,13 @@ Underlying Language Model: The project leverages the Phi-3 Mini LLM for this tra
 Client Requirements: The MCP-aware AI client (in this architecture, the Playwright MCP server itself) requires a specific configuration file to establish communication.  
 
 #### Configuration File Path
-Ensure the configuration file is present at the following location, replacing {userName} with your local system username:  
+C:\Users\{username}\.config\mcp\clients\playwright-mcp-config.json is read by **MCP Client**:  
+-- ✅ Claude Desktop (if installed)  
+-- ✅ GitHub Copilot (Agent Mode, if installed)   
+-- ✅ Cursor (if installed)    
+-- ✅ Cline (if installed)   
 
-C:\Users\{userName}\.config\mcp\clients\playwright-mcp-config.json
-This file tells the MCP server to expect you calls from:
+#### The client then launches the server automatically on basis of the info contained in playwright-mcp-config.json:
 ```
 {  
   "servers": {  
@@ -29,6 +32,21 @@ This file tells the MCP server to expect you calls from:
     }  
   }  
 }  
+```
+However, in this project the **runner** , runner/test-casesPwRT.js starts the server explicitely:
+```
+const transport = new StdioClientTransport({
+   command: "node",
+   args: ["dist/server.js"]
+});
+(...) 
+const mcp = new Client({
+  name: "bdc-test-agent",
+  version: "1.0.0"
+});  
+
+await mcp.connect(transport);
+
 ```
 ## Compiling TypeScript Files to Distinct Target Directories
 To compile TypeScript (.ts) source files into JavaScript (.js) and distribute them to specific target directories, you can leverage dedicated TypeScript configuration files (e.g., tsconfig.*.json).  
