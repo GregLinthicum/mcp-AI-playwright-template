@@ -160,7 +160,7 @@ Your architecture is sound. The custom server is appropriate for:
 ## REFERENCE PROJECTS
 
 - [Playwright MCP + Python](https://github.com/66Ronghua99/open_tkhelper/)  
-- [Playwright MCP + Node.js](https://github.com/dtedesco1/dtedes.co/blob/)  
+- [Playwright MCP + Node.js](https://github.com/dtedesco1/nextjs-markdown-boilerplate)  
 - [Playwright‑powered MCP server - community](https://github.com/aakashH242/mcp-playwright)
 -   
 #### Key differences between Microsodt official core MCP Playwright Server and AakashH242’s MCP Playwright Server  
