@@ -48,6 +48,13 @@ const mcp = new Client({
 await mcp.connect(transport);
 
 ```
+##  Use Claude Desktop as MCP Client instead of a custom 'test-casesPwRT.js'
+In my other, more production geared projects, I would simply use Claude Desktop as MCP Client instead of writing 'test-casesPwRT.js' as a custom written runner.
+
+#### With either of the two above approaches your CI/CD pipeline needs another MCP client  
+You could run ollama-mini in pipeline but it is heavy.  You are better of switching to Claude Code CLI by using anthropics/claude-code-action.
+
+
 ## Compiling TypeScript Files to Distinct Target Directories
 To compile TypeScript (.ts) source files into JavaScript (.js) and distribute them to specific target directories, you can leverage dedicated TypeScript configuration files (e.g., tsconfig.*.json).  
 
