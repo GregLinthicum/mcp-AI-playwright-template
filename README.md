@@ -16,7 +16,7 @@ Have a great day,
   
 
 
-# This project is set up to debug with LOCAL AI
+# This project is set up to debug with LOCAL LLM under ollama
     
 #### This is in sync with C:\MCP_BDC\mcpServer-Playwright-templateV8  on author's hard drive.
 
