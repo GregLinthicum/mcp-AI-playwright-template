@@ -1,9 +1,9 @@
 ## Preface
 Just a quick clarification: the below is not a self-healing template. It is intended as a starting point for building a customized executor and a customized MCP Playwright server.
 
-The current implementation invokes AI during test execution, which offers flexibility but is not necessarily optimized for performance-sensitive test suites.
+The current implementation invokes AI during test execution, which offers flexibility but is not necessarily optimized for performance.
 
-If your primary interest is self-healing, you may find [Healwright](https://github.com/amrsa1/healwright) useful:
+If your primary interest is self-healing, you may find [Healwright](https://github.com/amrsa1/healwright) useful.
 
 That said, once your automation needs to validate complex business flows across multiple dynamic pages and integrations, the challenges tend to shift beyond locator healing alone.
 
